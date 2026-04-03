@@ -1,0 +1,30 @@
+name: caddy-project
+
+networks:
+  caddy:
+    driver: bridge
+
+volumes:
+  caddy:
+  caddy_data:
+  caddy_config:
+
+services:
+  caddy:
+    image: lb803/caddy:${CADDY_VERSION:-2.11.2}
+    container_name: caddy
+    hostname: caddy
+    restart: unless-stopped
+    user: caddy
+    networks:
+      - caddy
+    ports:
+      - 80:8080
+    environment:
+      TZ: ${TZ:-London/Europe}
+      XDG_CONFIG_HOME: /var/lib/caddy/config
+      XDG_DATA_HOME: /var/lib/caddy/data
+    volumes:
+      - ./caddy/:/var/lib/caddy/caddy/
+      - caddy_config:/var/lib/caddy/config
+      - caddy_data:/var/lib/caddy/data
