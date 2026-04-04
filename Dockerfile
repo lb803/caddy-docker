@@ -1,6 +1,6 @@
 FROM caddy:2.11.2-alpine AS deps
 
-FROM alpine:3.23
+FROM alpine:3.23.3
 
 COPY --from=deps /usr/bin/caddy /usr/bin/caddy
 
