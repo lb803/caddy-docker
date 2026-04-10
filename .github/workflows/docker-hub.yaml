@@ -27,14 +27,11 @@ jobs:
 
       # Build and push for both amd64 and arm64
       - name: Build & push multi‑arch image
-        run: |
-          TAG=${{ github.event.release.tag_name }}
-          REPO=${{ secrets.DOCKERHUB_USERNAME }}/caddy
-
-          # Build for linux/amd64 and linux/arm64 and push in one step
-          docker buildx build \
-            --platform linux/amd64,linux/arm64 \
-            -t $REPO:$TAG \
-            -t $REPO:latest \
-            --push \
-            .
+        uses: docker/build-push-action@d08e5c354a6adb9ed34480a06d141179aa583294 # v7.0.0
+        with:
+          context: .
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/caddy:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/caddy:${{ github.event.release.tag_name }}
