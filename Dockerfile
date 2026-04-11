@@ -1,11 +1,7 @@
-FROM caddy:2.11.2-alpine AS deps
-
 FROM alpine:3.23.3
 
-COPY --from=deps /usr/bin/caddy /usr/bin/caddy
-
-RUN addgroup -g 101 caddy && \
-    adduser -u 100 -G caddy -D -H -s /sbin/nologin caddy
+RUN apk add --no-cache \
+    caddy==2.11.2-r0
 
 USER caddy
 
