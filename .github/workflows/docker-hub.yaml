@@ -5,7 +5,9 @@ on:
   release:
     types: [published]
 
-permissions: {}
+permissions:
+  contents: read
+  packages: write
 
 jobs:
   docker:
@@ -14,8 +16,6 @@ jobs:
       # Checkout source (Dockerfile, app code, etc.)
       - name: Checkout code
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-        permissions:
-          contents: read
         with:
           persist-credentials: false
 
@@ -34,9 +34,6 @@ jobs:
       # Build and push for both amd64 and arm64
       - name: Build & push multi‑arch image
         uses: docker/build-push-action@d08e5c354a6adb9ed34480a06d141179aa583294 # v7.0.0
-        permissions:
-          contents: read
-          packages: write
         with:
           context: .
           platforms: linux/amd64,linux/arm64
