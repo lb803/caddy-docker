@@ -1,7 +1,7 @@
 FROM alpine:3.23.4
 
 RUN apk add --no-cache \
-    caddy==2.11.2-r1
+    caddy==2.11.2-r2
 
 USER caddy
 
